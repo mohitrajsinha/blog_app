@@ -1,8 +1,9 @@
 import 'package:blog_app/blog_model.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:meta/meta.dart';
- // Import Dio package
+// Import Dio package
 
 part 'blog_event.dart';
 part 'blog_state.dart';
@@ -24,9 +25,8 @@ class BlogBloc extends Bloc<BlogEvent, BlogState> {
   }
 
   Future<List<BlogPost>> _fetchBlogPosts() async {
-    final String url = 'https://intent-kit-16.hasura.app/api/rest/blogs';
-    final String adminSecret =
-        '32qR4KmXOIpsGPQKMqEJHGJS27G5s7HdSKO3gdtQd2kv5e852SiYwWNfxkZOBuQ6';
+    String url = dotenv.env['API_KEY']!;
+    String adminSecret = dotenv.env['ADMIN_SECRET']!;
 
     try {
       final response = await _dio.get(
